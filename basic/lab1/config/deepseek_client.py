@@ -19,3 +19,24 @@ def get_client():
         api_key=deepseek_api_key,
         base_url=base_url)
     return client
+
+def client_chat(system_message, user_message):
+    return get_client().chat.completions.create(
+    model="deepseek-flash",
+    messages=[
+        system_message,
+        user_message,
+    ],
+    stream=False,
+    reasoning_effort="low",
+    extra_body={"thinking": {"type": "enabled"}}
+)
+
+def client_chat_conversation(conversation_history):
+    return get_client().chat.completions.create(
+    model="deepseek-flash",
+    messages=conversation_history,
+    stream=False,
+    reasoning_effort="low",
+    extra_body={"thinking": {"type": "enabled"}}
+)
